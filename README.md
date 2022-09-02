@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SDK-GM
 
 ## 项目运行
@@ -88,3 +89,6 @@ git push origin master
 4. 自定义全局 `class或者id` 样式，放在`@/styles/global.less`文件下
 5. 修改全局`element-ui`样式，放在`@/styles/element-ui.less`文件下
 6. 建议使用公共组件，容易跨模块维护。
+=======
+# sdk-template
+>>>>>>> 0857d16169e589142936b66a1c838aa87520098e
