@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width,maximum-scale=1.0,minimum-scale=1.0,initial-scale=1.0,user-scalable=no">
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+  <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.css) { %>
+  <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style">
+  <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet">
+  <% } %>
+  <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
+  <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="preload" as="script">
+  <% } %>
+
+  <title><%= webpackConfig.name %></title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= webpackConfig.name %> doesn't work properly without JavaScript enabled. Please enable it
+      to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+
+  <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
+  <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+  <% } %>
+</body>
+
+</html>

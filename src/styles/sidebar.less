@@ -1,0 +1,104 @@
+.app-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.main-container {
+  display: flex;
+  height: 100%;
+  background: #F5F5F7;
+}
+.main-wrapper-header {
+  height: calc(100% - @navbarHeight)
+}
+.sidebar-wrapper {
+  transition: width 0.28s;
+  width: @sideBarWidth !important;
+  background-color: @menuBg;
+  height: 100%;
+  overflow: hidden;
+}
+// 菜单内容
+.el-scrollbar {
+  flex: 1;
+  height: 100%;
+}
+.scrollbar-wrapper {
+  overflow-x: hidden !important;
+}
+// elment 相关
+.horizontal-collapse-transition {
+  transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+}
+.el-scrollbar__bar.is-vertical {
+  right: 0px;
+}
+// 左侧菜单交互
+.sidebar {
+  .sidebar-item {
+    &--icon {
+      margin-right: 8px;
+      font-size: 18px;
+      vertical-align: inherit;
+    }
+  }
+  .el-menu {
+    & > .sidebar-item {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+  // 高度
+  .el-menu-item,
+  .el-submenu__title {
+    height: 44px;
+    line-height: 44px;
+    * {
+      vertical-align: bottom;
+    }
+  }
+  // 菜单
+  .el-menu-item {
+    i {
+      color: @menuText;
+    }
+    &:hover {
+      background-color: @menuHover !important;
+    }
+    &.is-active {
+      background-color: @menuActiveBg!important;
+      i {
+        color: @menuActiveText;
+      }
+    }
+  }
+  // 折叠菜单
+  .el-submenu {
+    .el-menu {
+      padding: 0;
+      background-color: @subMenuBg !important;
+    }
+    .el-menu-item {
+      min-width: @sideBarWidth;
+      background-color: @subMenuBg !important;
+      &:hover {
+        background-color: @subMenuHover !important;
+      }
+      &.is-active {
+        background-color: @menuActiveBg!important;
+      }
+    }
+    .el-submenu__title {
+      &:hover {
+        background-color: @subMenuHover !important;
+      }
+    }
+    &.is-active .el-submenu__title {
+      color: @subMenuActiveText!important;
+      i {
+        color: @subMenuActiveText;
+      }
+    }
+  }
+}

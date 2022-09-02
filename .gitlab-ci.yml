@@ -1,0 +1,79 @@
+stages:
+  - build
+  - deploy
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - node_modules/
+
+test_build:
+  stage: build
+  script:
+    - node -v
+    - npm config set registry https://registry.npmmirror.com/
+    - npm install --silent
+    - npm run build:test
+  artifacts:
+    paths:
+      - dist/
+  only:
+    - test
+  tags:
+    - sdk-runner
+
+test_deploy:
+  stage: deploy
+  script:
+    - sudo mkdir -p /data/web-test/${CI_PROJECT_NAMESPACE}
+    - sudo rsync -av --delete --chown=nginx:nginx dist/ /data/web-test/${CI_PROJECT_NAMESPACE}/$CI_PROJECT_NAME
+  tags:
+    - sdk-runner
+  only:
+    - test
+
+pre_build:
+  stage: build
+  script:
+    - node -v
+    - npm config set registry https://registry.npmmirror.com/
+    - npm install --silent
+    - npm run build:pre
+  artifacts:
+    paths:
+      - dist/
+  tags:
+    - sdk-runner
+  only:
+    - pre-release
+
+pre_deploy:
+  stage: deploy
+  script:
+    - sudo mkdir -p /data/web/${CI_PROJECT_NAMESPACE}
+    - sudo rsync -av --delete --chown=nginx:nginx dist/ /data/web/${CI_PROJECT_NAMESPACE}/$CI_PROJECT_NAME
+  tags:
+    - sdk-runner
+  only:
+    - pre-release
+
+release_build:
+  stage: build
+  script:
+    - node -v
+    - npm config set registry https://registry.npmmirror.com/
+    - npm install --silent
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+  only:
+    - tags
+
+release_deploy:
+  stage: deploy
+  script:
+    - cd dist
+    - tar zcf /data/publish/${CI_PROJECT_NAMESPACE}_${CI_PROJECT_NAME}_${CI_COMMIT_REF_NAME}.tar.gz *
+  only:
+    - tags
