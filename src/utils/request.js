@@ -63,14 +63,11 @@ service.interceptors.request.use(
     config.headers['X-Token'] = config.headers['Juhe-Token'] = getToken()
     sign(config)
     // 增加取消操作
-    // 排除appid改变 - 菜单接口 nav/tree
-    COMMON_INTERFACE.forEach(inter => {
-      if (!config.url.includes(inter)) {
-        config.cancelToken = new axios.CancelToken(cancel => {
-          window._axiosPromiseArr.push({ cancel })
-        })
-      }
-    })
+    if (!COMMON_INTERFACE.includes(config.url)) {
+      config.cancelToken = new axios.CancelToken(cancel => {
+        window._axiosPromiseArr.push({ cancel })
+      })
+    }
 
     return config
   },
